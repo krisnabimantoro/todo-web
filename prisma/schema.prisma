@@ -1,0 +1,24 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model status {
+  id          Int    @id @default(autoincrement())
+  name_status String @db.VarChar
+  todo        todo[]
+}
+
+
+
+model todo {
+  id            Int       @id @default(autoincrement())
+  name_activity String    @db.VarChar
+  id_status     Int
+  date_todo     DateTime  @db.Date
+  status        status    @relation(fields: [id_status], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
